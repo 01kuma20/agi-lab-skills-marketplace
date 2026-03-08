@@ -32,6 +32,14 @@
       "version": "0.1.0",
       "category": "utility",
       "tags": ["birthday", "countdown", "utility"]
+    },
+    {
+      "name": "wingman",
+      "source": "./plugins/wingman",
+      "description": "会議開始時に参加者プロフィールからアイスブレイクを自動生成し、Kyoko音声で読み上げる自律スキル。",
+      "version": "1.0.0",
+      "category": "productivity",
+      "tags": ["meeting", "icebreaker", "voice", "autonomous", "team-building"]
     }
   ]
 }
