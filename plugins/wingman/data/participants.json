@@ -6,27 +6,5 @@
     "purpose": "チームビルディングとアイデア発散",
     "tone": "casual"
   },
-  "participants": [
-    {
-      "name": "田中 海斗",
-      "role": "エンジニア",
-      "expertise": ["Python", "機械学習"],
-      "fun_facts": ["猫を3匹飼っている", "趣味は登山"],
-      "location": "東京"
-    },
-    {
-      "name": "Sophia Chen",
-      "role": "デザイナー",
-      "expertise": ["UI/UX", "Figma"],
-      "fun_facts": ["台湾出身", "マラソン完走経験あり"],
-      "location": "大阪"
-    },
-    {
-      "name": "鈴木 遼",
-      "role": "プロダクトマネージャー",
-      "expertise": ["アジャイル", "BtoB SaaS"],
-      "fun_facts": ["元サッカー部主将", "毎朝6時起き"],
-      "location": "リモート（福岡）"
-    }
-  ]
+  "participant_ids": ["U001", "U012", "U034"]
 }
