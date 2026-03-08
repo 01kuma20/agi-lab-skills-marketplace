@@ -24,6 +24,14 @@
       "version": "1.1.0",
       "category": "fun",
       "tags": ["entertainment", "ascii-art", "terminal", "break-time"]
+    },
+    {
+      "name": "birthday-countdown",
+      "source": "./plugins/birthday-countdown",
+      "description": "誕生日（1月20日）までの残り日数を表示するスキル。",
+      "version": "0.1.0",
+      "category": "utility",
+      "tags": ["birthday", "countdown", "utility"]
     }
   ]
 }

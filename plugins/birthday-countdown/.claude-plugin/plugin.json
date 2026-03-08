@@ -1,0 +1,9 @@
+{
+  "name": "birthday-countdown",
+  "description": "誕生日（1月20日）までの残り日数を表示するスキル。",
+  "version": "0.1.0",
+  "author": {
+    "name": "hayatokumagai"
+  },
+  "license": "MIT"
+}
