@@ -1,0 +1,48 @@
+{
+  "_version": "1.0",
+  "_created": "2026-03-14T00:00:00Z",
+  "_updated": "2026-03-14T00:00:00Z",
+  "personal": {
+    "name": "山田 太郎",
+    "current_title": "バックエンドエンジニア",
+    "years_of_experience": 5
+  },
+  "skills": {
+    "technical": ["Python", "Django", "PostgreSQL", "Docker", "AWS"],
+    "business": ["要件定義", "プロジェクト管理", "チームリード"]
+  },
+  "work_history": [
+    {
+      "company": "株式会社サンプル",
+      "title": "バックエンドエンジニア",
+      "period_start": "2021-04",
+      "period_end": "現在",
+      "responsibilities": ["APIサーバー開発", "DB設計", "コードレビュー"],
+      "achievements": ["API応答速度を30%改善", "マイクロサービス移行を主導"],
+      "tech_stack": ["Python", "Django", "PostgreSQL", "Docker", "AWS"]
+    },
+    {
+      "company": "株式会社テスト",
+      "title": "Webエンジニア",
+      "period_start": "2019-04",
+      "period_end": "2021-03",
+      "responsibilities": ["Webアプリ開発", "フロントエンド実装"],
+      "achievements": ["ユーザー登録率20%向上"],
+      "tech_stack": ["JavaScript", "Vue.js", "PHP", "MySQL"]
+    }
+  ],
+  "education": [
+    {
+      "institution": "〇〇大学",
+      "degree": "学士",
+      "field": "情報工学",
+      "graduation_year": "2019"
+    }
+  ],
+  "certifications": ["AWS Certified Solutions Architect – Associate"],
+  "preferences": {
+    "desired_role": "シニアバックエンドエンジニア / テックリード",
+    "desired_salary": "600万円〜800万円",
+    "work_style": "ハイブリッド（週2-3日リモート）"
+  }
+}
