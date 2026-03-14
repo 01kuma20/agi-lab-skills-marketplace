@@ -193,7 +193,8 @@ bash "${CLAUDE_PLUGIN_ROOT}/scripts/display_results.sh" section "職務経歴書
 ```
 
 プロフィールと求人情報を元に、日本標準フォーマットで職務経歴書Markdownを生成し、
-Write ツールで `${CLAUDE_PLUGIN_ROOT}/output/resume_<YYYYMMDD>.md` に保存する。
+Write ツールで **カレントディレクトリ（ユーザーの作業ディレクトリ）** に `resume_<YYYYMMDD>.md` として保存する。
+パスは `${CLAUDE_WORKING_DIR}/resume_<YYYYMMDD>.md` を使用する（`CLAUDE_WORKING_DIR` が未定義の場合は `./ `相対パスを使用）。
 
 ### 職務経歴書フォーマット
 
@@ -293,7 +294,7 @@ bash "${CLAUDE_PLUGIN_ROOT}/scripts/display_results.sh" complete
   2. <スキルB>
   3. <スキルC>
 
-職務経歴書：<output/resume_YYYYMMDD.md>
+職務経歴書：<./resume_YYYYMMDD.md>（カレントディレクトリに保存）
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ✅ 転職活動、応援しています！ — Career Compass
