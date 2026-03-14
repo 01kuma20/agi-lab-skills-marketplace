@@ -240,7 +240,7 @@ bash "${CLAUDE_PLUGIN_ROOT}/scripts/list_resumes.sh"
 
 プロフィールと求人情報を元に、日本標準フォーマットで職務経歴書Markdownを生成し、
 Write ツールで以下の2箇所に保存する：
-1. **プラグイン内永続ストレージ**：`${CLAUDE_PLUGIN_ROOT}/data/resumes/resume_<名前>_<YYYYMMDD>.md`
+1. **永続ストレージ**：`~/.career-compass/resumes/resume_<名前>_<YYYYMMDD>.md`（バージョンアップしても消えない）
 2. **カレントディレクトリ**：`./resume_<名前>_<YYYYMMDD>.md`（すぐ開けるように）
 
 ### 職務経歴書フォーマット

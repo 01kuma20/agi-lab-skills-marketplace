@@ -127,7 +127,7 @@ bash "${CLAUDE_PLUGIN_ROOT}/scripts/display_results.sh" section "職務経歴書
 ```
 
 ファイルは Write ツールで以下の2箇所に保存する：
-1. `${CLAUDE_PLUGIN_ROOT}/data/resumes/resume_<名前>_<YYYYMMDD>.md`（永続保存）
+1. `~/.career-compass/resumes/resume_<名前>_<YYYYMMDD>.md`（永続保存、バージョンアップしても消えない）
 2. `./resume_<名前>_<YYYYMMDD>.md`（カレントディレクトリ、すぐ開けるように）
 
 ---

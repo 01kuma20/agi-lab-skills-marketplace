@@ -1,7 +1,7 @@
 {
   "name": "career-compass",
   "description": "転職活動を自律支援するエージェント。求人URLとプロフィールからスキルギャップ分析・学習ロードマップ・職務経歴書を自動生成する。",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "author": { "name": "hayatokumagai" },
   "license": "MIT"
 }

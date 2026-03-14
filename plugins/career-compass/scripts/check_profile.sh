@@ -2,11 +2,11 @@
 # check_profile.sh — data/profiles/ 内のプロフィール存在・充足確認
 # 出力: STATUS: OK/PARTIAL/EMPTY, COUNT, プロフィール一覧
 
+PROFILES_DIR="${HOME}/.career-compass/profiles"
+
+# 旧形式 data/profile.json が存在する場合はマイグレーション（キャッシュ内を含む）
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 PLUGIN_ROOT="$(dirname "${SCRIPT_DIR}")"
-PROFILES_DIR="${CLAUDE_PLUGIN_ROOT:-$PLUGIN_ROOT}/data/profiles"
-
-# 旧形式 data/profile.json が存在する場合はマイグレーション
 OLD_PROFILE="${CLAUDE_PLUGIN_ROOT:-$PLUGIN_ROOT}/data/profile.json"
 if [ -f "${OLD_PROFILE}" ] && [ ! -d "${PROFILES_DIR}" ]; then
   mkdir -p "${PROFILES_DIR}"

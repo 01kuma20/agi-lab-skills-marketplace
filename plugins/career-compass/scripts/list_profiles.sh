@@ -2,9 +2,7 @@
 # list_profiles.sh — 保存済みプロフィール一覧を表示
 # 出力: STATUS: OK/EMPTY, COUNT, FILE/NAME 一覧
 
-SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-PLUGIN_ROOT="$(dirname "${SCRIPT_DIR}")"
-PROFILES_DIR="${CLAUDE_PLUGIN_ROOT:-$PLUGIN_ROOT}/data/profiles"
+PROFILES_DIR="${HOME}/.career-compass/profiles"
 
 if [ ! -d "${PROFILES_DIR}" ]; then
   echo "STATUS: EMPTY"
