@@ -83,6 +83,22 @@ bash "${CLAUDE_PLUGIN_ROOT}/scripts/save_profile.sh" '<JSON文字列>'
 
 ---
 
+## ステップ 2.5：追加ヒアリング
+
+求人の必須スキルとプロフィールを照合し、**プロフィールから確認できない必須スキルが1つでもあれば**、スコアリング前にユーザーへ1問ずつ確認する：
+
+```
+🔍 追加確認（求人必須要件）
+
+この求人では「<スキル名>」が必須とされていますが、
+ご経験はありますか？（ある場合は概要も教えてください）
+```
+
+ユーザーの回答を収集し、「ある」と答えた場合はその内容をスキルギャップ分析に反映する。
+`want_skills` は確認対象外。プロフィールに既にあるスキルは重複して聞かない。
+
+---
+
 ## ステップ 3：スキルギャップ分析
 
 プロフィールと求人要件を照合して分析する：
@@ -108,36 +124,7 @@ bash "${CLAUDE_PLUGIN_ROOT}/scripts/progress_bar.sh" <スコア>
 
 ---
 
-## ステップ 5：職務経歴書生成
-
-職務経歴書を生成する前に既存のものを確認する：
-
-```bash
-bash "${CLAUDE_PLUGIN_ROOT}/scripts/list_resumes.sh"
-```
-
-- `COUNT: 0` → 新規生成へ
-- `COUNT: 1以上` → 選択UIを表示する：
-  ```
-  📄 既存の職務経歴書
-  [1] 熊谷颯人 — 2026/03/14（Google Workspace SE）
-  [2] 熊谷颯人 — 2026/03/10（Amazon SDE）
-  [+] 新しく生成する
-  ```
-  既存を選んだ場合は Read ツールでファイル内容を表示して終了。
-  `+` の場合は新規生成へ進む。
-
-```bash
-bash "${CLAUDE_PLUGIN_ROOT}/scripts/display_results.sh" section "職務経歴書を生成中..."
-```
-
-ファイルは Write ツールで以下の2箇所に保存する：
-1. `~/.career-compass/resumes/resume_<名前>_<YYYYMMDD>.md`（永続保存、バージョンアップしても消えない）
-2. `./resume_<名前>_<YYYYMMDD>.md`（カレントディレクトリ、すぐ開けるように）
-
----
-
-## ステップ 6：完了サマリー
+## ステップ 5：完了サマリー
 
 ```bash
 bash "${CLAUDE_PLUGIN_ROOT}/scripts/display_results.sh" complete
@@ -146,7 +133,6 @@ bash "${CLAUDE_PLUGIN_ROOT}/scripts/display_results.sh" complete
 最後に以下を表示：
 - マッチスコア
 - 主なギャップスキル（上位3件）
-- 生成した職務経歴書のパス
 
 ---
 
