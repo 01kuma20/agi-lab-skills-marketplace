@@ -99,7 +99,7 @@ bash "${CLAUDE_PLUGIN_ROOT}/scripts/progress_bar.sh" <スコア>
 bash "${CLAUDE_PLUGIN_ROOT}/scripts/display_results.sh" section "職務経歴書を生成中..."
 ```
 
-ファイルは Write ツールで `${CLAUDE_PLUGIN_ROOT}/output/resume_$(date +%Y%m%d).md` に保存する。
+ファイルは Write ツールで **カレントディレクトリ** に `resume_<YYYYMMDD>.md` として保存する（パス例：`./resume_20260314.md`）。
 
 ---
 
