@@ -1,70 +1,83 @@
 #!/bin/bash
-# check_profile.sh — profile.json の存在・充足確認
-# 出力: STATUS: OK / PARTIAL / EMPTY
+# check_profile.sh — data/profiles/ 内のプロフィール存在・充足確認
+# 出力: STATUS: OK/PARTIAL/EMPTY, COUNT, プロフィール一覧
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 PLUGIN_ROOT="$(dirname "${SCRIPT_DIR}")"
-PROFILE_PATH="${CLAUDE_PLUGIN_ROOT:-$PLUGIN_ROOT}/data/profile.json"
+PROFILES_DIR="${CLAUDE_PLUGIN_ROOT:-$PLUGIN_ROOT}/data/profiles"
 
-# profile.json が存在しない
-if [ ! -f "${PROFILE_PATH}" ]; then
-  echo "STATUS: EMPTY"
-  echo "REASON: profile.json が見つかりません。オンボーディングを開始します。"
-  exit 0
+# 旧形式 data/profile.json が存在する場合はマイグレーション
+OLD_PROFILE="${CLAUDE_PLUGIN_ROOT:-$PLUGIN_ROOT}/data/profile.json"
+if [ -f "${OLD_PROFILE}" ] && [ ! -d "${PROFILES_DIR}" ]; then
+  mkdir -p "${PROFILES_DIR}"
+  python3 - "${OLD_PROFILE}" "${PROFILES_DIR}" <<'MIGRATE'
+import sys, json, re
+from pathlib import Path
+
+old = Path(sys.argv[1])
+dst = Path(sys.argv[2])
+try:
+    data = json.loads(old.read_text(encoding="utf-8"))
+    name = data.get("personal", {}).get("name", "profile")
+    safe = re.sub(r'[^\w\u3000-\u9fff\u30a0-\u30ff\u3040-\u309f]', '_', name).strip('_')
+    (dst / f"{safe}.json").write_text(json.dumps(data, ensure_ascii=False, indent=2), encoding="utf-8")
+    print(f"MIGRATED: {old} → {dst}/{safe}.json")
+except Exception as e:
+    print(f"MIGRATE_ERROR: {e}")
+MIGRATE
 fi
 
-# Python3 でJSONを検証・充足確認
-python3 - "${PROFILE_PATH}" <<'PYEOF'
+python3 - "${PROFILES_DIR}" <<'PYEOF'
 import sys
 import json
+from pathlib import Path
 
-path = sys.argv[1]
-try:
-    with open(path, "r", encoding="utf-8") as f:
-        data = json.load(f)
-except Exception as e:
+profiles_dir = Path(sys.argv[1])
+
+if not profiles_dir.exists():
     print("STATUS: EMPTY")
-    print(f"REASON: JSONパースエラー: {e}")
+    print("COUNT: 0")
+    print("REASON: プロフィールが見つかりません。オンボーディングを開始します。")
     sys.exit(0)
 
-missing = []
+files = sorted(profiles_dir.glob("*.json"))
 
-# 必須フィールドチェック
-personal = data.get("personal", {})
-if not personal.get("name"):
-    missing.append("personal.name")
-if not personal.get("current_title"):
-    missing.append("personal.current_title")
-if not personal.get("years_of_experience") and personal.get("years_of_experience") != 0:
-    missing.append("personal.years_of_experience")
+if not files:
+    print("STATUS: EMPTY")
+    print("COUNT: 0")
+    print("REASON: プロフィールが見つかりません。オンボーディングを開始します。")
+    sys.exit(0)
 
-skills = data.get("skills", {})
-if not skills.get("technical"):
-    missing.append("skills.technical")
+def validate(data):
+    missing = []
+    personal = data.get("personal", {})
+    if not personal.get("name"):           missing.append("personal.name")
+    if not personal.get("current_title"):  missing.append("personal.current_title")
+    if not personal.get("years_of_experience") and personal.get("years_of_experience") != 0:
+        missing.append("personal.years_of_experience")
+    if not data.get("skills", {}).get("technical"):  missing.append("skills.technical")
+    if not data.get("work_history"):                 missing.append("work_history")
+    edu = data.get("education", [])
+    if not edu or not edu[0].get("institution"):     missing.append("education")
+    if not data.get("preferences", {}).get("desired_role"): missing.append("preferences.desired_role")
+    return missing
 
-work_history = data.get("work_history", [])
-if not work_history:
-    missing.append("work_history")
+print(f"COUNT: {len(files)}")
+print(f"PROFILES_DIR: {profiles_dir}")
 
-education = data.get("education", [])
-if not education or not education[0].get("institution"):
-    missing.append("education")
-
-preferences = data.get("preferences", {})
-if not preferences.get("desired_role"):
-    missing.append("preferences.desired_role")
-
-if missing:
-    print("STATUS: PARTIAL")
-    print(f"MISSING_FIELDS: {', '.join(missing)}")
-    print(f"PROFILE_PATH: {path}")
-else:
-    print("STATUS: OK")
-    print(f"PROFILE_PATH: {path}")
-    # プロフィールサマリー表示
-    print(f"NAME: {personal.get('name', '')}")
-    print(f"TITLE: {personal.get('current_title', '')}")
-    print(f"EXPERIENCE: {personal.get('years_of_experience', 0)}年")
-    tech = skills.get("technical", [])
-    print(f"TECH_SKILLS: {', '.join(tech[:5])}")
+for i, f in enumerate(files, 1):
+    try:
+        data = json.loads(f.read_text(encoding="utf-8"))
+        missing = validate(data)
+        status = "PARTIAL" if missing else "OK"
+        personal = data.get("personal", {})
+        name    = personal.get("name", "（不明）")
+        title   = personal.get("current_title", "")
+        updated = data.get("_updated", "")[:10]
+        tech    = data.get("skills", {}).get("technical", [])
+        print(f"[{i}] STATUS: {status} | FILE: {f} | NAME: {name} | TITLE: {title} | UPDATED: {updated} | TECH: {', '.join(tech[:3])}")
+        if missing:
+            print(f"    MISSING: {', '.join(missing)}")
+    except Exception as e:
+        print(f"[{i}] STATUS: ERROR | FILE: {f} | ERROR: {e}")
 PYEOF

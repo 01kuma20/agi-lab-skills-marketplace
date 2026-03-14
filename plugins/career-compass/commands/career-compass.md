@@ -21,14 +21,26 @@ bash "${CLAUDE_PLUGIN_ROOT}/scripts/display_results.sh" splash
 
 ---
 
-## ステップ 1：プロフィール確認・オンボーディング
+## ステップ 1：プロフィール確認・選択・オンボーディング
 
 ```bash
 bash "${CLAUDE_PLUGIN_ROOT}/scripts/check_profile.sh"
 ```
 
-- `STATUS: OK` → プロフィールを読み込んで次へ
-- `STATUS: EMPTY` または `STATUS: PARTIAL` → オンボーディングウィザードを起動
+出力の `COUNT` を確認して以下を判断する：
+
+- `COUNT: 0` → オンボーディングウィザードを起動（新規登録）
+- `COUNT: 1` → そのプロフィールを自動ロードして次へ
+- `COUNT: 2以上` → **ユーザーにどのプロフィールを使うか選択を促す**
+
+選択UIの例：
+```
+👤 プロフィールを選択してください
+[1] 熊谷颯人 — データサイエンティスト（更新: 2026-03-14）
+[2] 山田太郎 — バックエンドエンジニア（更新: 2026-01-20）
+[+] 新しいプロフィールを登録する
+```
+`+` が選ばれた場合はオンボーディングウィザードを起動する。
 
 ### オンボーディングウィザード（STATUS が EMPTY/PARTIAL の場合）
 
@@ -93,13 +105,30 @@ bash "${CLAUDE_PLUGIN_ROOT}/scripts/progress_bar.sh" <スコア>
 
 ## ステップ 5：職務経歴書生成
 
-プロフィールと求人情報を元に、日本標準フォーマットの職務経歴書を生成し保存する。
+職務経歴書を生成する前に既存のものを確認する：
+
+```bash
+bash "${CLAUDE_PLUGIN_ROOT}/scripts/list_resumes.sh"
+```
+
+- `COUNT: 0` → 新規生成へ
+- `COUNT: 1以上` → 選択UIを表示する：
+  ```
+  📄 既存の職務経歴書
+  [1] 熊谷颯人 — 2026/03/14（Google Workspace SE）
+  [2] 熊谷颯人 — 2026/03/10（Amazon SDE）
+  [+] 新しく生成する
+  ```
+  既存を選んだ場合は Read ツールでファイル内容を表示して終了。
+  `+` の場合は新規生成へ進む。
 
 ```bash
 bash "${CLAUDE_PLUGIN_ROOT}/scripts/display_results.sh" section "職務経歴書を生成中..."
 ```
 
-ファイルは Write ツールで **カレントディレクトリ** に `resume_<YYYYMMDD>.md` として保存する（パス例：`./resume_20260314.md`）。
+ファイルは Write ツールで以下の2箇所に保存する：
+1. `${CLAUDE_PLUGIN_ROOT}/data/resumes/resume_<名前>_<YYYYMMDD>.md`（永続保存）
+2. `./resume_<名前>_<YYYYMMDD>.md`（カレントディレクトリ、すぐ開けるように）
 
 ---
 
