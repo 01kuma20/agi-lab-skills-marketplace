@@ -15,10 +15,10 @@
 ## 何ができるか
 
 ```
-/career-compass https://www.wantedly.com/projects/xxxxx
+この求人を分析して → https://www.wantedly.com/projects/xxxxx
 ```
 
-**このコマンド 1 つで、追加指示なしに最後まで自走します。**
+**この一言で、追加指示なしに最後まで自走します。**
 
 ```
 🧭 CAREER COMPASS — 転職支援エージェント
@@ -62,15 +62,37 @@
 
 ## セットアップ
 
-### 1. インストール
+### 1. リポジトリをクローンする
 
 ```bash
-# Claude Code 上で実行
+git clone https://github.com/01kuma20/agi-lab-skills-marketplace.git
+cd agi-lab-skills-marketplace
+```
+
+クローンしたディレクトリで Claude Code を開く。
+
+```bash
+claude .
+```
+
+### 2. プラグインをインストールする
+
+Claude Code 上で以下を実行する。
+
+```
 /plugin marketplace add 01kuma20/agi-lab-skills-marketplace
 /plugin install career-compass@agi-lab-skills
 ```
 
-### 2. プロフィールを配置する
+インストール後、コマンドが有効になっていない場合は以下を実行する。
+
+```
+/reload-plugins
+```
+
+> `/career-compass:career-compass` がコマンド一覧に表示されない場合は `/plugin` を開いて career-compass を Enable してから `/reload-plugins` を実行してください。
+
+### 3. プロフィールを配置する
 
 `input/profiles/profile.json.example` をコピーして自分の情報に書き換える。
 
@@ -82,11 +104,15 @@ cp plugins/career-compass/input/profiles/profile.json.example \
 > プロフィールが見つからない場合はエラーメッセージを表示して終了します。
 > プロフィールが複数ある場合はファイル名のアルファベット順で先頭のものが自動選択されます。
 
-### 3. 実行する
+### 4. 実行する
+
+Claude Code 上で求人 URL を渡して話しかけるだけで動きます。
 
 ```
-/career-compass https://www.wantedly.com/projects/xxxxx
+この求人を分析して → https://www.wantedly.com/projects/xxxxx
 ```
+
+Wantedly・企業採用ページ・OpenWork・Green など、求人情報が載っているURLであればどこでも動きます。
 
 ---
 

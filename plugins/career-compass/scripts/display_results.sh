@@ -52,7 +52,6 @@ case "${MODE}" in
     echo ""
     printf "${GREEN}╔══════════════════════════════════════════════════════╗${RESET}\n"
     printf "${GREEN}║${RESET}  ${BOLD}✅  分析完了！${RESET}                                      ${GREEN}║${RESET}\n"
-    printf "${GREEN}║${RESET}  ${DIM}職務経歴書を output/ ディレクトリに保存しました。${RESET}      ${GREEN}║${RESET}\n"
     printf "${GREEN}╚══════════════════════════════════════════════════════╝${RESET}\n"
     echo ""
     printf "  ${CYAN}転職活動、応援しています！ — Career Compass 🧭${RESET}\n"

@@ -6,6 +6,14 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 PLUGIN_ROOT="${CLAUDE_PLUGIN_ROOT:-$(dirname "${SCRIPT_DIR}")}"
 PROFILES_DIR="${PLUGIN_ROOT}/input/profiles"
 
+# フォールバック: キャッシュにプロフィールがなければ作業ディレクトリの plugins/career-compass/input/profiles/ を探す
+if [ ! -d "${PROFILES_DIR}" ] || [ -z "$(find "${PROFILES_DIR}" -maxdepth 1 -name '*.json' 2>/dev/null)" ]; then
+  FALLBACK_DIR="$(pwd)/plugins/career-compass/input/profiles"
+  if [ -d "${FALLBACK_DIR}" ] && [ -n "$(find "${FALLBACK_DIR}" -maxdepth 1 -name '*.json' 2>/dev/null)" ]; then
+    PROFILES_DIR="${FALLBACK_DIR}"
+  fi
+fi
+
 python3 - "${PROFILES_DIR}" <<'PYEOF'
 import sys
 import json
