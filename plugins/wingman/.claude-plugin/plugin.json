@@ -1,7 +1,0 @@
-{
-  "name": "wingman",
-  "description": "会議開始時に参加者プロフィールからアイスブレイクを自動生成し、ロボ声で読み上げるスキル。",
-  "version": "1.0.0",
-  "author": { "name": "hayatokumagai" },
-  "license": "MIT"
-}

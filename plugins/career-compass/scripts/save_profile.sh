@@ -1,8 +1,10 @@
 #!/bin/bash
-# save_profile.sh — オンボーディング後にJSONをdata/profiles/<name>.jsonに保存
+# save_profile.sh — オンボーディング後にJSONをinput/profiles/<name>.jsonに保存
 # 使用法: bash save_profile.sh '<JSON文字列>'
 
-PROFILES_DIR="${HOME}/.career-compass/profiles"
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+PLUGIN_ROOT="${CLAUDE_PLUGIN_ROOT:-$(dirname "${SCRIPT_DIR}")}"
+PROFILES_DIR="${PLUGIN_ROOT}/input/profiles"
 
 JSON_INPUT="$1"
 

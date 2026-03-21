@@ -8,7 +8,9 @@ user-invocable: true
 
 # Career Compass — 転職支援エージェント（オーケストレーター）
 
-以下の順で2つのサブスキルを呼び出してフローを完結させます。
+**呼び出し方：** `/career-compass <求人URL>`
+
+引数として渡された求人URLを記録し、以下の順で2つのサブスキルを呼び出してフローを完結させます。
 
 ---
 
@@ -31,10 +33,9 @@ bash "${CLAUDE_PLUGIN_ROOT}/scripts/display_results.sh" splash
 
 ## ステップ 2：スキルギャップ分析
 
-取得したプロフィールJSONを引き継いで `career-compass-analyze` スキルを起動する。
+取得したプロフィールJSONと**ステップ0で受け取った求人URL**を引き継いで `career-compass-analyze` スキルを起動する。
 
-- 求人URLの取得・解析
-- 追加ヒアリング
+- 求人URLの解析（URLは引数から取得済み。ユーザーに再入力を求めない）
 - スキルギャップ分析
 - 学習ロードマップ生成
 - 完了サマリーの表示
@@ -45,3 +46,4 @@ bash "${CLAUDE_PLUGIN_ROOT}/scripts/display_results.sh" splash
 
 - **日本語で出力** — すべての出力を日本語で行う
 - **プロフィールを引き継ぐ** — ステップ1で取得したJSONをステップ2に確実に渡す
+- **URLを引き継ぐ** — 引数のURLをステップ2に確実に渡す。URLが未指定の場合のみユーザーに入力を求める

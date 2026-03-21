@@ -5,18 +5,10 @@
     "email": "kai@tempi.co.jp"
   },
   "metadata": {
-    "description": "AGIラボの plugin 集と、ハッカソン参加者向け starter template。",
-    "version": "1.1.0"
+    "description": "求人URLを渡すだけでスキルギャップ分析・学習ロードマップを自動生成する転職支援エージェント。",
+    "version": "1.2.0"
   },
   "plugins": [
-    {
-      "name": "hackathon-starter",
-      "source": "./plugins/hackathon-starter",
-      "description": "AGIラボハッカソン参加者向けの starter plugin。fork して、自分の skill に置き換えて公開・提出できます。",
-      "version": "0.1.0",
-      "category": "template",
-      "tags": ["starter", "template", "hackathon", "marketplace"]
-    },
     {
       "name": "terminal-vibes",
       "source": "./plugins/terminal-vibes",

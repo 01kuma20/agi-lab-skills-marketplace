@@ -1,31 +1,10 @@
 #!/bin/bash
-# check_profile.sh — data/profiles/ 内のプロフィール存在・充足確認
+# check_profile.sh — input/profiles/ 内のプロフィール存在・充足確認
 # 出力: STATUS: OK/PARTIAL/EMPTY, COUNT, プロフィール一覧
 
-PROFILES_DIR="${HOME}/.career-compass/profiles"
-
-# 旧形式 data/profile.json が存在する場合はマイグレーション（キャッシュ内を含む）
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-PLUGIN_ROOT="$(dirname "${SCRIPT_DIR}")"
-OLD_PROFILE="${CLAUDE_PLUGIN_ROOT:-$PLUGIN_ROOT}/data/profile.json"
-if [ -f "${OLD_PROFILE}" ] && [ ! -d "${PROFILES_DIR}" ]; then
-  mkdir -p "${PROFILES_DIR}"
-  python3 - "${OLD_PROFILE}" "${PROFILES_DIR}" <<'MIGRATE'
-import sys, json, re
-from pathlib import Path
-
-old = Path(sys.argv[1])
-dst = Path(sys.argv[2])
-try:
-    data = json.loads(old.read_text(encoding="utf-8"))
-    name = data.get("personal", {}).get("name", "profile")
-    safe = re.sub(r'[^\w\u3000-\u9fff\u30a0-\u30ff\u3040-\u309f]', '_', name).strip('_')
-    (dst / f"{safe}.json").write_text(json.dumps(data, ensure_ascii=False, indent=2), encoding="utf-8")
-    print(f"MIGRATED: {old} → {dst}/{safe}.json")
-except Exception as e:
-    print(f"MIGRATE_ERROR: {e}")
-MIGRATE
-fi
+PLUGIN_ROOT="${CLAUDE_PLUGIN_ROOT:-$(dirname "${SCRIPT_DIR}")}"
+PROFILES_DIR="${PLUGIN_ROOT}/input/profiles"
 
 python3 - "${PROFILES_DIR}" <<'PYEOF'
 import sys
@@ -37,7 +16,7 @@ profiles_dir = Path(sys.argv[1])
 if not profiles_dir.exists():
     print("STATUS: EMPTY")
     print("COUNT: 0")
-    print("REASON: プロフィールが見つかりません。オンボーディングを開始します。")
+    print("REASON: プロフィールが見つかりません。input/profiles/ にプロフィールJSONを配置してください。")
     sys.exit(0)
 
 files = sorted(profiles_dir.glob("*.json"))
@@ -45,7 +24,7 @@ files = sorted(profiles_dir.glob("*.json"))
 if not files:
     print("STATUS: EMPTY")
     print("COUNT: 0")
-    print("REASON: プロフィールが見つかりません。オンボーディングを開始します。")
+    print("REASON: プロフィールが見つかりません。input/profiles/ にプロフィールJSONを配置してください。")
     sys.exit(0)
 
 def validate(data):

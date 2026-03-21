@@ -2,7 +2,9 @@
 # list_resumes.sh — 保存済み職務経歴書一覧を表示
 # 出力: STATUS: OK/EMPTY, COUNT, FILE 一覧
 
-RESUMES_DIR="${HOME}/.career-compass/resumes"
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+PLUGIN_ROOT="${CLAUDE_PLUGIN_ROOT:-$(dirname "${SCRIPT_DIR}")}"
+RESUMES_DIR="${PLUGIN_ROOT}/input/resumes"
 
 if [ ! -d "${RESUMES_DIR}" ]; then
   echo "STATUS: EMPTY"

@@ -1,0 +1,61 @@
+{
+  "_version": "1.0",
+  "_created": "2026-01-01T00:00:00Z",
+  "_updated": "2026-01-01T00:00:00Z",
+  "personal": {
+    "name": "山田 太郎",
+    "current_title": "バックエンドエンジニア",
+    "years_of_experience": 5
+  },
+  "skills": {
+    "technical": [
+      "Python",
+      "Go",
+      "AWS",
+      "Docker"
+    ],
+    "business": [
+      "要件定義",
+      "システム設計",
+      "プロジェクト管理"
+    ]
+  },
+  "work_history": [
+    {
+      "company": "株式会社サンプル",
+      "title": "バックエンドエンジニア",
+      "period_start": "2022-04",
+      "period_end": "2026-01",
+      "responsibilities": [
+        "APIサーバー設計・実装",
+        "インフラ構築・運用"
+      ],
+      "achievements": [
+        "レスポンスタイムを50%改善"
+      ],
+      "tech_stack": [
+        "Python",
+        "Go",
+        "PostgreSQL",
+        "AWS"
+      ]
+    }
+  ],
+  "education": [
+    {
+      "institution": "○○大学",
+      "degree": "学士",
+      "field": "情報工学",
+      "graduation_year": "2022"
+    }
+  ],
+  "certifications": [
+    "AWS SAA",
+    "基本情報技術者"
+  ],
+  "preferences": {
+    "desired_role": "バックエンドエンジニア or テックリード",
+    "desired_salary": "800万円",
+    "work_style": "フルリモート希望"
+  }
+}
