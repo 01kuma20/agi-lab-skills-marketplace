@@ -80,6 +80,7 @@ cp plugins/career-compass/input/profiles/profile.json.example \
 ```
 
 > プロフィールが見つからない場合はエラーメッセージを表示して終了します。
+> プロフィールが複数ある場合はファイル名のアルファベット順で先頭のものが自動選択されます。
 
 ### 3. 実行する
 
