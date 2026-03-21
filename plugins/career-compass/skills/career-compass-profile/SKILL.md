@@ -35,7 +35,7 @@ bash "${CLAUDE_PLUGIN_ROOT}/scripts/check_profile.sh"
 以下のパスにプロフィールJSONを配置してください：
   plugins/career-compass/input/profiles/<名前>.json
 
-プロフィールの登録は以下のスキルで行えます：
-  /career-compass-profile
+profile.json.example をコピーして自分の情報に書き換えてください：
+  plugins/career-compass/input/profiles/profile.json.example
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ```
