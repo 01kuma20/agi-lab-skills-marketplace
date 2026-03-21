@@ -23,7 +23,7 @@ case "${MODE}" in
     echo ""
     printf "${CYAN}╔══════════════════════════════════════════════════════╗${RESET}\n"
     printf "${CYAN}║${RESET}  ${YELLOW}🧭  CAREER COMPASS  —  転職支援エージェント${RESET}        ${CYAN}║${RESET}\n"
-    printf "${CYAN}║${RESET}  ${DIM}スキルギャップ分析  →  学習ロードマップ  →  職務経歴書${RESET}  ${CYAN}║${RESET}\n"
+    printf "${CYAN}║${RESET}  ${DIM}スキルギャップ分析  →  学習ロードマップ生成  →  転職支援${RESET}  ${CYAN}║${RESET}\n"
     printf "${CYAN}╚══════════════════════════════════════════════════════╝${RESET}\n"
     echo ""
     printf "  ${DIM}Powered by Claude — あなたの転職を、データで後押しします。${RESET}\n"
